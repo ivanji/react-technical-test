@@ -71,7 +71,7 @@ class App extends Component {
         let filteredList = this.state.celebrities.filter((celebrity) => {
             return (
                 celebrity.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
-                celebrity.networth.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
+                //celebrity.networth.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
                 celebrity.age.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1 ||
                 celebrity.country.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1
             );
