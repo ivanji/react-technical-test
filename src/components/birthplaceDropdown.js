@@ -1,5 +1,5 @@
 import React from  'react';
-import Country from './country'
+import Country from './Country'
 
 const Birthplace = (props) => {
     return(

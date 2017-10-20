@@ -4,6 +4,16 @@ export default function searchReducer(state = { celebrities:[] }, action) {
             return [...state,
                 Object.assign({}, action.celebrity)
             ];*/
+        case 'FILTER_BY_COUNTRY':
+            return state.celebrities.reduce(function (country, state) {
+                if (country.includes(state.celebrity.country)) {
+                    state.celebrities.country
+                } else {
+                    country.push(state.country)
+                }
+                return country;
+            }, []);
+
         case 'FETCH_CELEBRITIES_SUCCESS':
             // return action.data;
             return (
