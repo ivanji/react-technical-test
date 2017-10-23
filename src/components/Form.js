@@ -9,8 +9,7 @@ const Form = (props)=> {
                 <div className="input-group">
                     <label>Birthplace: </label>
                     <Birthplace countryList={props.countryList}
-                                onChange={props.onChange}
-                    />
+                                onChange={props.onChange}/>
                 </div>
                 <div className="input-group">
                     <label htmlFor="">Currency Converter</label>

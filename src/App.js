@@ -15,22 +15,20 @@ class App extends React.Component {
             celebrity: []
         };
         this.filterByCountry = this.filterByCountry.bind(this);
-    }
-
-    filter() {
-        this.props.filterActions.filterByCountry(this.state.celebrity)
+        this.searchList = this.searchList.bind(this);
     }
 
     filterByCountry(event) {
-        event.preventDefault();
-        console.log(event.target.value);
         if (event.target.value === 'reset') {
-            this.setState({
-                search: ''
-            })
+            this.props.filterActions.resetCelebrities();
         } else {
             this.props.filterActions.filterByCountry(event.target.value);
         }
+    }
+
+    searchList(event) {
+        event.preventDefault();
+        this.props.filterActions.searchCelebrities(event.target.value);
     }
 
     render() {
@@ -39,6 +37,7 @@ class App extends React.Component {
                 <Form celebrities={this.props.celebrities}
                       onChange={this.filterByCountry}
                       countryList={this.props.countryList}
+                      search={this.searchList}
                 />
                 <CelebrityList celebrities={this.props.celebrities} />
             </div>
