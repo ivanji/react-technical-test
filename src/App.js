@@ -17,8 +17,9 @@ class App extends Component {
         this.filter = this.filter.bind(this);
     }
     filter() {
-        console.log(this.props);
-        this.props.filterActions.filterByCountry(this.state.celebrity)
+        this.props.filterByCountry(this.state.celebrities)
+
+
     }
     render() {
         return (
@@ -31,17 +32,16 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state);
     return {
         celebrities: state.searchReducer.celebrities,
-
+        countryList: state.searchReducer.countryList
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        // filterByCountry: country => dispatch(searchActions.filterByCountry(country)) //too verbose
-        filterActions: bindActionCreators(searchActions, dispatch)
+        filterByCountry: country => dispatch(searchActions.filterByCountry(country)) //too verbose
+        //filterActions: bindActionCreators(searchActions, dispatch)
     }
 }
 
