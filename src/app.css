@@ -1,0 +1,40 @@
+#root {
+  text-align : center;
+  width      : 970px;
+  margin     : 0 auto;
+}
+
+.app {
+  text-align : center;
+  background : #f2f2f2;
+  border     : 1px solid #d8d8d8;
+}
+
+#results { border : 1px solid #d8d8d8; padding : 10px; width : 66%; margin : 10px auto 10px; }
+
+.celebrity {
+  width            : 97%;
+  margin           : 10px;
+  border           : 1px solid #d8d8d8;
+  background-color : #f6f6f6;
+}
+
+h3, h4 { font-weight : normal; }
+
+h3 {
+  background  : #074e68;
+  color       : #fff;
+  line-height : 2.5em;
+}
+
+form { width : 67%; margin : 0 auto; display : block; overflow : hidden; }
+
+label { margin-bottom : 0.5em }
+
+.input-group { width : 50%; float : left; text-align : left; margin-bottom : 1.5em; }
+
+.input-group input { width : 100%; height : 31px; line-height : 2em; padding-left : 0.2em; }
+
+.input-group select { width : 100%; height : 37px; line-height : 2em; padding-left : 0.2em; }
+
+label { display : block; }

@@ -1,6 +1,6 @@
 import React from 'react';
-import Search from './search';
-import Birthplace from './birthplaceDropdown';
+import Search from './Search';
+import Birthplace from './CountryDropdown';
 
 const Form = (props)=> {
     return(
@@ -8,7 +8,9 @@ const Form = (props)=> {
             <div className="row">
                 <div className="input-group">
                     <label>Birthplace: </label>
-                    <Birthplace celebrities={props.celebrities} country={props.country}/>
+                    <Birthplace countryList={props.countryList}
+                                onChange={props.onChange}
+                    />
                 </div>
                 <div className="input-group">
                     <label htmlFor="">Currency Converter</label>
