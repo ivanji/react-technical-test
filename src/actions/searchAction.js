@@ -16,11 +16,12 @@ export function fetchCelebrities() {
 }
 
 export function fetchCelebritiesSuccess(data) {
-    // Let's immediately populate the Birthplace dropdown list using the received data
+    // Let's immediately populate the Birthplace drop-down list using the received data
     let countryList = data.celebrityList.reduce(function (countryList, celebrity) {
         // Creating an array of unique countries by comparing celebrity's countries
         // with the values in the new array
         if (countryList.includes(celebrity.country)) {
+            // TODO: Fix this abomination
             //return celebrity.country;
         } else {
             // if country doesn't exist in the new array, let's include it
@@ -31,8 +32,15 @@ export function fetchCelebritiesSuccess(data) {
         return countryList; //must return new array in case condition is true
     }, []);
 
+    let defaultCurrency = data.celebrityList.map(celebrity => {
+        return (celebrity.netWorth * 1);
+    });
+
     return {
-        type: 'FETCH_CELEBRITIES_SUCCESS', data: data.celebrityList, country: countryList
+        type: 'FETCH_CELEBRITIES_SUCCESS',
+                data: data.celebrityList,
+                country: countryList,
+                currency: defaultCurrency
     }
 }
 
@@ -80,7 +88,7 @@ export function resetView(originalList) {
 export function searchCelebrities(value) {
     return function (dispatch, getState) {
         //TODO: find out how to filter out celebrities based on selected country's celebrities and revert back as user types
-        let results = getState().searchReducer.filteredCelebrities.filter(function (celebrity) {
+        let results = getState().searchReducer.celebrities.filter(function (celebrity) {
             return (
                 celebrity.name.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
                 celebrity.age.toString().indexOf(value) !== -1 ||
@@ -88,6 +96,7 @@ export function searchCelebrities(value) {
             )
         });
         dispatch(searchList(results));
+
     }
 }
 
@@ -98,3 +107,19 @@ export function searchList(results) {
 }
 
 //</editor-fold>
+
+
+export function fxConversion(value) {
+    return function(dispatch, getState) {
+        let selectedCurrency = getState().searchReducer.celebrities.map(celebrity => {
+            return (celebrity.netWorth * value);
+        });
+        dispatch(updateNetworth(selectedCurrency));
+    }
+}
+
+export function updateNetworth(selectedCurrency) {
+    return {
+        type: 'UPDATE_NETWORTH', selectedCurrency
+    }
+}

@@ -9,11 +9,12 @@ const Form = (props)=> {
                 <div className="input-group">
                     <label>Birthplace: </label>
                     <Birthplace countryList={props.countryList}
-                                onChange={props.onChange}/>
+                                onChange={props.onChange}
+                    />
                 </div>
                 <div className="input-group">
                     <label htmlFor="">Currency Converter</label>
-                    <select onChange={props.currency}>
+                    <select onChange={props.fxConversion}>
                         <option value="1">US Dollar</option>
                         <option value="0.75">Euro</option>
                         <option  value="1.11">Australian Dollar</option>

@@ -2,8 +2,6 @@ import React from 'react';
 import Celebrity from './Celebrity';
 
 const CelebrityList = (props) => {
-
-
     return (
         <div>
             {

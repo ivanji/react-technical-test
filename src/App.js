@@ -1,10 +1,13 @@
 import React from 'react';
-import Form from './components/Form';
-import CelebrityList from './components/CelebrityList';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
+import Form from './components/Form';
+import CelebrityList from './components/CelebrityList';
+import NoResults from './components/NoResults';
+
 import * as searchActions from './actions/searchAction';
+
 import './app.css';
 
 //<editor-fold desc="Container">
@@ -16,6 +19,7 @@ class App extends React.Component {
         };
         this.filterByCountry = this.filterByCountry.bind(this);
         this.searchList = this.searchList.bind(this);
+        this.fxConversion = this.fxConversion.bind(this);
     }
 
     filterByCountry(event) {
@@ -31,6 +35,10 @@ class App extends React.Component {
         this.props.filterActions.searchCelebrities(event.target.value);
     }
 
+    fxConversion(event) {
+        this.props.filterActions.fxConversion(event.target.value);
+    }
+
     render() {
         return (
             <div className="App">
@@ -38,8 +46,12 @@ class App extends React.Component {
                       onChange={this.filterByCountry}
                       countryList={this.props.countryList}
                       search={this.searchList}
+                      fxConversion={this.fxConversion}
                 />
-                <CelebrityList celebrities={this.props.celebrities} />
+                {this.props.celebrities.length > 0 ?
+                    <CelebrityList  currency={this.props.currency} celebrities={this.props.celebrities} /> :
+                    <NoResults />
+                }
             </div>
         );
     }
@@ -51,7 +63,8 @@ function mapStateToProps(state) {
     return {
         celebrities: state.searchReducer.filteredCelebrities,
         countryList: state.searchReducer.countryList,
-        selectedCountry: state.searchReducer.selectedCountry
+        selectedCountry: state.searchReducer.selectedCountry,
+        currency: state.searchReducer.currency
     };
 }
 //</editor-fold>
