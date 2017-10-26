@@ -13,11 +13,14 @@ const Form = (props)=> {
                     />
                 </div>
                 <div className="input-group">
+
+                    {console.log(props)}
+
                     <label htmlFor="">Currency Converter</label>
                     <select onChange={props.fxConversion}>
-                        <option value="1">US Dollar</option>
+                        <option value={props.currencyValues}>US Dollar</option>
                         <option value="0.75">Euro</option>
-                        <option  value="1.11">Australian Dollar</option>
+                        <option value="1.11">Australian Dollar</option>
                     </select>
                 </div>
             </div>

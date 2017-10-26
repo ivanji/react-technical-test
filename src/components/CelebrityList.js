@@ -6,7 +6,7 @@ const CelebrityList = (props) => {
         <div>
             {
                 props.celebrities.map(function (celebrity) {
-                    return <Celebrity key={celebrity.rank} {...celebrity}/>
+                    return <Celebrity key={celebrity.rank} {...celebrity} />
                 })
             }
         </div>

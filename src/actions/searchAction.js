@@ -1,4 +1,20 @@
 //<editor-fold desc="FetchCelebrities">
+/*export function fetchCelebrities() {
+    return function (dispatch) {
+        fetch('./celebrityRichList.json')
+            .then((response) => {
+                if (response.status !== 200) {
+                    console.log('Looks like there was a problem. Status Code: ' + response.status);
+                    return;
+                }
+                response.json().then(data => {
+                    dispatch(fetchCelebritiesSuccess(data))
+                })
+            });
+
+    }
+}*/
+
 export function fetchCelebrities() {
     return function (dispatch) {
         fetch('./celebrityRichList.json')
@@ -7,11 +23,40 @@ export function fetchCelebrities() {
                     console.log('Looks like there was a problem. Status Code: ' + response.status);
                     return;
                 }
-
                 response.json().then(data => {
-                    dispatch(fetchCelebritiesSuccess(data))
+                    dispatch(fetchCelebritiesSuccess(data));
+                    fetch('http://api.fixer.io/latest?base=USD&symbols=GBP,EUR,AUD')
+                        .then((response) => {
+                            response.json().then(rates => {
+                                console.log(rates.rates);
+                                const actualRates = rates.rates;
+                                console.warn(actualRates);
+                                console.dir(actualRates);
+
+                                let ratesList = [], rateObj = {};
+                                for (var key in actualRates) {
+                                    rateObj = {};
+                                    if (actualRates.hasOwnProperty(key)) {
+                                        rateObj.name = key;
+                                        rateObj.value= actualRates[key];
+
+                                        ratesList.push(rateObj);
+                                    }
+                                }
+                                console.log(ratesList);
+                                dispatch(fetchRateSuccess(rates));
+                            })
+                        })
                 })
-            })
+            });
+    }
+}
+
+export function fetchRateSuccess(rates) {
+    return {
+        type: 'FETCH_RATE_SUCCESS',
+        baseCurrency: rates.base, //defining base currency directly from the API response
+        currency: rates.rates
     }
 }
 
@@ -32,15 +77,12 @@ export function fetchCelebritiesSuccess(data) {
         return countryList; //must return new array in case condition is true
     }, []);
 
-    let defaultCurrency = data.celebrityList.map(celebrity => {
-        return (celebrity.netWorth * 1);
-    });
+
 
     return {
         type: 'FETCH_CELEBRITIES_SUCCESS',
-                data: data.celebrityList,
-                country: countryList,
-                currency: defaultCurrency
+            data: data.celebrityList,
+            country: countryList
     }
 }
 
@@ -96,7 +138,6 @@ export function searchCelebrities(value) {
             )
         });
         dispatch(searchList(results));
-
     }
 }
 
@@ -108,11 +149,13 @@ export function searchList(results) {
 
 //</editor-fold>
 
-
+//<editor-fold desc="FX Conversion">
 export function fxConversion(value) {
     return function(dispatch, getState) {
-        let selectedCurrency = getState().searchReducer.celebrities.map(celebrity => {
-            return (celebrity.netWorth * value);
+        let selectedCurrency = getState().searchReducer.filteredCelebrities.map(celebrity => {
+            //console.log(celebrity.netWorth);
+            celebrity.netWorth = celebrity.netWorth * value;
+            return celebrity;// Multiply original netWorth with value specified for each currency
         });
         dispatch(updateNetworth(selectedCurrency));
     }
@@ -123,3 +166,4 @@ export function updateNetworth(selectedCurrency) {
         type: 'UPDATE_NETWORTH', selectedCurrency
     }
 }
+//</editor-fold>

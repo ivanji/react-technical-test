@@ -47,9 +47,12 @@ class App extends React.Component {
                       countryList={this.props.countryList}
                       search={this.searchList}
                       fxConversion={this.fxConversion}
+                      currencyValues={this.props.currency}
                 />
                 {this.props.celebrities.length > 0 ?
-                    <CelebrityList  currency={this.props.currency} celebrities={this.props.celebrities} /> :
+                    <CelebrityList
+                        currency={this.props.currency}
+                        celebrities={this.props.celebrities} /> :
                     <NoResults />
                 }
             </div>
@@ -64,7 +67,8 @@ function mapStateToProps(state) {
         celebrities: state.searchReducer.filteredCelebrities,
         countryList: state.searchReducer.countryList,
         selectedCountry: state.searchReducer.selectedCountry,
-        currency: state.searchReducer.currency
+        currency: state.searchReducer.currency,
+        baseCurrency: state.searchReducer.baseCurrency
     };
 }
 //</editor-fold>
